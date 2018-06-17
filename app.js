@@ -33,18 +33,21 @@ var openCards = [];
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
-        openCards.push(card);
-        card.classList.add('open', 'show');
+        // prevent clicking twice on the same card
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match'))
+            openCards.push(card);
+            card.classList.add('open', 'show');
 
-        if (openCards.length == 2) {
+            if (openCards.length == 2) {
             // add function to flip the cards back over after some time.
-            setTimeout(function() {
-                openCards.forEach(function(card) {
-                    card.classList.remove('open', 'show');
-                });
-                openCards = [];
-            }, 1000);
-        }
+                setTimeout(function() {
+                    openCards.forEach(function(card) {
+                        card.classList.remove('open', 'show');
+                    });
+                
+                    openCards = [];
+                }, 1000);
+            }
     });
 });
 
