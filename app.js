@@ -25,32 +25,20 @@ function shuffle(array) {
     return array;
 }
 
-/* const cards = document.querySelectorAll('.card');
-console.log(cards);
-
-for (card of cards) {
-    card.addEventListener('click', () => {
-        console.log("Hello");
-    });
-} */
-
-/* document.querySelector('.deck');
-
-deck.addEventListener('click', event => {
-    const clickTarget = event.target;
-    if (clickTarget.classList.contains('card')) {
-        clickTarget.classList.toggle('open');
-        clickTarget.classList.toggle('show');
-    }
-}); */
-
-/* set up the event listener for a card. If a card is clicked:
-*  - display the card's symbol (put this functionality in another function that you call from this one) COMMIT AFTER THIS */
+/* Set up the event listener for a card. If a card is clicked, display the card's symbol (put this functionality in another function that you call from this one) COMMIT 
+*/
 const allCards = document.querySelectorAll('.card');
+// put open cards in an array. Show 2 cards, hide others that are clicked after. COMMIT
+const openCards = [];
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
-        card.classList.add('open', 'show');
+        if (openCards.length >= 2) {
+            // hide
+        } else {
+            openCards.push(card);
+            card.classList.add('open', 'show');
+        }
     });
 });
 
