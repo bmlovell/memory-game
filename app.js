@@ -29,15 +29,21 @@ function shuffle(array) {
 */
 const allCards = document.querySelectorAll('.card');
 // put open cards in an array. Show 2 cards, hide others that are clicked after. COMMIT
-const openCards = [];
+var openCards = [];
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
-        if (openCards.length >= 2) {
-            // hide
-        } else {
-            openCards.push(card);
-            card.classList.add('open', 'show');
+        openCards.push(card);
+        card.classList.add('open', 'show');
+
+        if (openCards.length == 2) {
+            // add function to flip the cards back over after some time.
+            setTimeout(function() {
+                openCards.forEach(function(card) {
+                    card.classList.remove('open', 'show');
+                });
+                openCards = [];
+            }, 1000);
         }
     });
 });
