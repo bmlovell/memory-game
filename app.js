@@ -46,7 +46,7 @@ function initGame() {
     moveCounter.innerText = moves;
     deck.innerHTML = cardHTML.join('');
 }
-
+// increment the move counter and display it on the page
 var moves = 0;
 var moveCounter = document.querySelector('.moves');
 
@@ -60,13 +60,13 @@ var openCards = [];
 */
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
-        // prevent clicking twice on the same card
-        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match'))
+        // prevent clicking twice on the same card; also prevents clicking more than 2 cards
+        if (openCards.length < 2 && !card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openCards.push(card);
-            card.classList.add('open', 'show');
-
+                card.classList.add('open', 'show');
+            }
             // if cards do NOT match, they'll flip back over.
-            if (openCards.length == 2) {
+            if (openCards.length === 2) {
                 if(openCards[0].dataset.card == openCards[1].dataset.card) {
                     openCards[0].classList.add('match');
                     openCards[0].classList.add('open');
@@ -95,6 +95,5 @@ allCards.forEach(function(card) {
 });
 
 /*
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
