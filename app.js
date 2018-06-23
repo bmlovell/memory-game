@@ -11,7 +11,11 @@ const cards = [ 'fa-diamond', 'fa-diamond',
                 'fa-bomb', 'fa-bomb',
                 ];
 
-// Display the cards on the page
+// Increment the move counter and display it on the page
+let moves = 0;
+const moveCounter = document.querySelector('.moves');
+
+// Function creates cards programmatically and displays cards on the page
 function generateCard(card) {
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
@@ -34,7 +38,6 @@ function shuffle(array) {
 
 //  Add each card's HTML to the page
 function initGame() {
-    const deck = document.querySelector('.deck');
     const cardHTML = shuffle(cards).map(function(card) {
         return generateCard(card);
     });
@@ -42,14 +45,16 @@ function initGame() {
     moveCounter.innerText = moves;
     deck.innerHTML = cardHTML.join('');
 }
-// Increment the move counter and display it on the page
-let moves = 0;
-const moveCounter = document.querySelector('.moves');
 
 // Check the score to hide stars
 function checkScore () {
     if (moves === 6 || moves === 12) {
         hideStar();
+    }
+    if (moves !== 1) {
+        moveCounter.innerText = moves + " Moves"
+    } else {
+        moveCounter.innerText = moves + " Move";
     }
 }
 
@@ -64,9 +69,6 @@ function hideStar() {
     }
 }
 
-hideStar();
-hideStar();
-
 initGame();
 
 const allCards = document.querySelectorAll('.card');
@@ -74,10 +76,11 @@ const allCards = document.querySelectorAll('.card');
 var openCards = [];
 
 // Set up the event listener for a card. If a card is clicked, display the card's symbol 
-allCards.forEach(function(card) {
-    card.addEventListener('click', function(e) {
-        // Prevent clicking twice on the same card; also prevents clicking more than 2 cards
-        if (openCards.length < 2 && !card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+function activateCards() {
+    allCards.forEach(function(card) {
+        card.addEventListener('click', function(e) {
+            // Prevent clicking twice on the same card; also prevents clicking more than 2 cards
+            if (openCards.length < 2 && !card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             openCards.push(card);
                 card.classList.add('open', 'show');
             }
@@ -105,10 +108,12 @@ allCards.forEach(function(card) {
             }
 
             moves += 1;
-            moveCounter.innerText = moves;
             checkScore();
         }
     });
 });
+}
 
-//if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+activateCards();
+
+/* if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one) */
