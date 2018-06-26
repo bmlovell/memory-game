@@ -1,6 +1,7 @@
 const cards = document.querySelectorAll('.card');
 
 const deck = document.querySelector('.deck');
+let matchedCards = [];
 let flippedCards = [];
 let moves = 0;
 let clockOff = true;
@@ -8,26 +9,14 @@ let seconds = 0;
 let minutes = 0;
 let timer;
 
-function startTimer() {
-    timer = setInterval(displayTimer, 1000);
-}
+/* Modal test
+//seconds = 150;
+displayTimer(); //2:01
+moves = 0;
+checkScore(); 
 
-function stopTimer() {
-    clearInterval(timer);
-    seconds = 0;
-    minutes = 0;
-}
-
-function displayTimer() {
-    seconds++;
-    if (seconds < 10) {
-        seconds = `0${seconds}`;
-    } if (seconds >= 60) {
-        minutes++;
-        seconds = "00";
-    }
-        document.querySelector('.clock').innerHTML = "0" + minutes + ":" + seconds;
-}
+writeModalStats();
+toggleModal(); // Open modal */
 
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
@@ -53,20 +42,19 @@ function flipCard(card) {
 
 function addFlippedCard(clickTarget) {
     flippedCards.push(clickTarget);
-    console.log(flippedCards);
 }
+
 // call this on click event listener
 function checkForMatch() {
     if (
         flippedCards[0].firstElementChild.className === 
         flippedCards[1].firstElementChild.className
     ) {
-        console.log('match');
         flippedCards[0].classList.toggle('match');
         flippedCards[1].classList.toggle('match');
         flippedCards = [];
+        matchedCards.push(cards);
     } else {
-        console.log('not a match');
         setTimeout(() => {
             // hides the icons if not a match
             flipCard(flippedCards[0]);
@@ -83,6 +71,27 @@ function clickConditionals(clickTarget) {
         flippedCards.length < 2 &&
         !flippedCards.includes(clickTarget)
     );
+}
+
+function startTimer() {
+    timer = setInterval(displayTimer, 1000);
+}
+
+function displayTimer() {
+    seconds++;
+    if (seconds < 10) {
+        seconds = `0${seconds}`;
+    } if (seconds >= 60) {
+        minutes++;
+        seconds = "00";
+    }
+        document.querySelector('.clock').innerHTML = "0" + minutes + ":" + seconds;
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    seconds = 0;
+    minutes = 0;
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -111,8 +120,12 @@ shuffleDeck();
 
 function moveCounter() {
     moves++;
+    let text = '1 Move'
+    if (moves > 1 || moves === 0) {
+        text = moves + ' Moves'
+        }
     const movesText = document.querySelector('.moves');
-    movesText.innerHTML = moves;
+    movesText.innerHTML = text;
 }
 
 function checkScore() {
@@ -131,7 +144,92 @@ function hideStar() {
     }
 }
 
+function gameOver() {
+    stopTimer();
+    writeModalStats();
+    toggleModal();
+}
 
+function toggleModal() {
+    if (matchedCards.length === 16) {
+        const modal = document.querySelector('.modal_background');
+        modal.classList.toggle('hide');
+    }
+}
+
+document.querySelector('.modal_cancel').addEventListener('click', () => {
+    toggleModal();
+});
+
+function writeModalStats() {
+    const timeStat = document.querySelector('.modal_time');
+    const clockTime = document.querySelector('.clock').innerHTML;
+    const movesStat = document.querySelector('.modal_moves');
+    const starsStat = document.querySelector('.modal_stars');
+    const stars = getStars();
+
+    timeStat.innerHTML = `Time = ${clockTime}`;
+    movesStat.innerHTML = `Moves = ${moves}`;
+    starsStat.innerHTML = `Stars = ${stars}`;
+}
+
+function getStars() {
+    stars = document.querySelectorAll('.stars li');
+    starCount = 0;
+    for (star of stars) {
+        if (star.style.display !== 'none') {
+            starCount++;
+        }
+    }
+    return starCount;
+}
+
+function resetGame() {
+    resetClockAndTime();
+    resetMoves();
+    resetStars();
+    shuffleDeck();
+    matchedCards = [];
+    flippedCards = [];
+    console.log('click');
+}
+
+function replayGame() {
+    resetGame();
+    toggleModal();
+}
+
+function resetClockAndTime() {
+    stopTimer();
+    clockOff = true;
+    seconds = 0;
+    minutes = 0;
+    displayTimer();
+}
+
+function resetMoves() {
+    moves = 0;
+    document.querySelector('.moves').innerHTML = moves + ' Moves';
+}
+
+function resetStars() {
+    stars = 0;
+    const starList = document.querySelectorAll('.stars li');
+    for (star of starList) {
+        star.style.display = 'inline';
+    }
+}
+
+document.querySelector('.modal_replay').addEventListener('click', replayGame);
+
+document.querySelector('.restart').addEventListener('click', resetGame);
+
+document.querySelector('.modal_replay').addEventListener('click', resetGame);
+
+/* Should this be somewhere else?
+if (matched === matchedCards) {
+        gameOver();
+}; */
 
 /*
 // Create a list that holds all of your cards
@@ -159,15 +257,6 @@ function initGame() {
     moveCounter.innerText = moves;
     deck.innerHTML = cardHTML.join('');
 }
-
-// Set up the event listener for a card. If a card is clicked, display the card's symbol 
-
-            checkScore();
-        }
-    });
-});
-}
-
 
 /*
  * Display the cards on the page
