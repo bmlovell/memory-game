@@ -9,15 +9,6 @@ let seconds = 0;
 let minutes = 0;
 let timer;
 
-/* Modal test
-//seconds = 150;
-displayTimer(); //2:01
-moves = 0;
-checkScore(); 
-
-writeModalStats();
-toggleModal(); // Open modal */
-
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
     if (clickConditionals(clickTarget)) {
@@ -25,14 +16,17 @@ deck.addEventListener('click', event => {
             startTimer();
             clockOff = false;
         }
-        flipCard(clickTarget);
-        addFlippedCard(clickTarget);
+            flipCard(clickTarget);
+            addFlippedCard(clickTarget);
         if (flippedCards.length === 2) {
-            checkForMatch(clickTarget);
+            findMatches(clickTarget);
             moveCounter();
             checkScore();
         }
     }
+        if (matchedCards.length === 16) {
+            gameOver();
+        }
 });
 
 function flipCard(card) {
@@ -44,23 +38,22 @@ function addFlippedCard(clickTarget) {
     flippedCards.push(clickTarget);
 }
 
-// call this on click event listener
-function checkForMatch() {
-    if (
+function findMatches() {
+    if ( // Are the 2 cards a match?
         flippedCards[0].firstElementChild.className === 
         flippedCards[1].firstElementChild.className
-    ) {
-        flippedCards[0].classList.toggle('match');
-        flippedCards[1].classList.toggle('match');
-        flippedCards = [];
-        matchedCards.push(cards);
-    } else {
+    ) { // If so, they stay turned over and get pushed to matchedCards array
+        flippedCards.forEach(function(card) {
+            card.classList.toggle('match');
+            matchedCards.push(card);
+            flippedCards = [];
+        })
+    } else { // If not a match, flip them back over and reset the array
         setTimeout(() => {
-            // hides the icons if not a match
             flipCard(flippedCards[0]);
             flipCard(flippedCards[1]);
             flippedCards = [];
-        }, 1000);
+        }, 700);
     }
 }
 
@@ -145,16 +138,14 @@ function hideStar() {
 }
 
 function gameOver() {
-    stopTimer();
-    writeModalStats();
     toggleModal();
+    writeModalStats();
+    stopTimer();
 }
 
 function toggleModal() {
-    if (matchedCards.length === 16) {
         const modal = document.querySelector('.modal_background');
         modal.classList.toggle('hide');
-    }
 }
 
 document.querySelector('.modal_cancel').addEventListener('click', () => {
@@ -189,22 +180,26 @@ function resetGame() {
     resetMoves();
     resetStars();
     shuffleDeck();
+    for (card of document.querySelectorAll('.card')) {
+        card.classList.remove('open');
+        card.classList.remove('show');
+        card.classList.remove('match');
+    }
     matchedCards = [];
     flippedCards = [];
-    console.log('click');
 }
 
 function replayGame() {
     resetGame();
     toggleModal();
-}
+} 
 
 function resetClockAndTime() {
     stopTimer();
+    displayTimer();
     clockOff = true;
     seconds = 0;
     minutes = 0;
-    displayTimer();
 }
 
 function resetMoves() {
@@ -224,14 +219,9 @@ document.querySelector('.modal_replay').addEventListener('click', replayGame);
 
 document.querySelector('.restart').addEventListener('click', resetGame);
 
-document.querySelector('.modal_replay').addEventListener('click', resetGame);
+document.querySelector('.modal_close').addEventListener('click', toggleModal);
 
-/* Should this be somewhere else?
-if (matched === matchedCards) {
-        gameOver();
-}; */
-
-/*
+/* A different solution to keep in mind
 // Create a list that holds all of your cards
 const cards = [ 'fa-diamond', 'fa-diamond',
                 'fa-paper-plane-o', 'fa-paper-plane-o',
