@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    /* background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -29,8 +29,10 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Abril Fatface', cursive;
+    font-size: 4em;
     font-weight: 300;
+    color: #2e3d49;
 }
 
 /*
@@ -40,7 +42,8 @@ h1 {
 .deck {
     width: 660px;
     min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    background: linear-gradient(160deg, #b0ebfd 25%, #0dd6bb 100%);
+/*  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%); */
     padding: 32px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
@@ -67,7 +70,7 @@ h1 {
 
 .deck .card.open {
     transform: rotateY(0);
-    background: #02b3e4;
+    background: #0dd6bb;
     cursor: default;
 }
 
@@ -77,8 +80,9 @@ h1 {
 
 .deck .card.match {
     cursor: default;
-    background: #02ccba;
+    background: #b0ebfd;
     font-size: 33px;
+    color: #054f94;
 }
 
 /*
@@ -96,6 +100,7 @@ h1 {
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
+    color: #0dd6bb;
 }
 
 .score-panel .stars li {
@@ -135,6 +140,7 @@ h1 {
 }
 
 .modal_heading {
+    font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
