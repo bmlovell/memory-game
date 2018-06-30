@@ -8,6 +8,7 @@ let seconds = 0;
 let minutes = 0;
 let timer;
 
+
 /* When card is clicked, start the timer, flip the card, push it to the array and check for matches. Also count the moves and check the score to keep track of star rating. */
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
@@ -261,6 +262,7 @@ Also thanks to @Erica Bee for pointing me in the right directions when I got stu
 
 
 /* A different solution to keep in mind, referenced from Mike Wale's Udacity webinar
+https://www.youtube.com/watch?v=_rUH-sEs68Y
 
 // Create a list that holds all of your cards
 const cards = [ 'fa-diamond', 'fa-diamond',
