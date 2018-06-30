@@ -35,6 +35,11 @@ h1 {
     color: #2e3d49;
 }
 
+h2 {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 24px;
+}
+
 /*
  * Styles for the deck of cards
  */
@@ -140,7 +145,8 @@ h1 {
 }
 
 .modal_heading {
-    font-size: 18px;
+    font-size: 24px;
+    letter-spacing: 1px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -165,11 +171,43 @@ h1 {
 .modal_button {
     width: 60px;
     height: 30px;
-    background-color: lightgray;
+    background-color: #b0ebfd;
     border: 1px solid gray;
+    font-weight: bold;
 }
 
 .modal_close {
     font-weight: bold;
     font-size: 2rem;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 680px) {
+    .deck {
+        width: 330px;
+        min-height: 340px;
+        padding: 15px;
+        align-self: center;
+    }
+    .deck .card {
+        width: 62px;
+        height: 62px;
+        padding: 25px;
+    }
+    h1 {
+        font-size: 3em;
+        }
+    .score-panel {
+        width: 300px;
+    }
+    .deck .card.show {
+        font-size: 20px;
+    }
+    .modal_body {
+        width: 350px;
+    }
+    .modal_background {
+        height: 100%;
+    }
 }
