@@ -13,8 +13,27 @@ During each turn:
 
 ## Instructions
 
+For this game, you will need Font Awesome for the card icons:
+
+https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css
+
+Coda and Abril Fatface fonts from Google Fonts 
+
+https://fonts.googleapis.com/css?family=Coda
+https://fonts.googleapis.com/css?family=Abril+Fatface
+
 1. Download or clone the repository:
 https://github.com/bmlovell/memory-game/archive/master.zip
 https://github.com/bmlovell/memory-game.git
 
 2. Open index.html file to view the game in your browser.
+
+## Acknowledgments
+
+SPECIAL THANKS to helpful reference from Matthew Cranford's Memory Game Walkthrough blogposts
+https://matthewcranford.com/memory-game-walkthrough-part-1-setup/
+
+Also thanks to @Erica Bee for pointing me in the right directions when I got stuck, as well as @Crystal and @Juan L.
+
+Also thanks to help and references from Mike Wale's Udacity webinar
+https://www.youtube.com/watch?v=_rUH-sEs68Y
